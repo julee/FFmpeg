@@ -1878,6 +1878,9 @@ static int configure_video_filters(AVFilterGraph *graph, VideoState *is, const c
         return AVERROR(ENOMEM);
 
     for (i = 0; i < renderer_info.num_texture_formats; i++) {
+        if (renderer_info.texture_formats[i] == SDL_PIXELFORMAT_IYUV) {
+            continue;
+        }
         for (j = 0; j < FF_ARRAY_ELEMS(sdl_texture_format_map) - 1; j++) {
             if (renderer_info.texture_formats[i] == sdl_texture_format_map[j].texture_fmt) {
                 pix_fmts[nb_pix_fmts++] = sdl_texture_format_map[j].format;
